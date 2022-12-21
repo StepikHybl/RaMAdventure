@@ -1,0 +1,77 @@
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin-left: -0.05em;
+}
+
+.menu1{
+    margin: auto;
+    width: 95%;
+    display: flex;
+}
+
+.rick{
+    display: flex;
+    width: 12.5%;
+    position: absolute;
+    top: 47%;
+    left: 42%;
+}
+
+.portal1{
+    display: flex;
+    width: 13%;
+    position: absolute;
+    top: 25%;
+    left: 3.2%;
+
+}
+
+#game1{
+    display: flex;
+    width: 50px;
+    position: absolute;
+    top: 45%;
+    left: 4.2%;
+    color:crimson;
+    font-size: 20px;
+    background: none;
+    border: none;
+}
+
+.portal2{
+    display: flex;
+    width: 15%;
+    position: absolute;
+    top: -2.2%;
+    left: 32%;
+}
+
+#game2{
+    display: flex;
+    position: absolute;
+    top: 6.5%;
+    left: 35%;
+    color:crimson;
+    font-size: 20px;
+    background: none;
+    border: none;
+}
+
+#Shooter{
+    display: none;
+    margin-top: -2em;
+}
+
+#canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#collisionCanvas{
+    display: none;
+}
