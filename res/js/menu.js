@@ -3,6 +3,7 @@ const game1 = document.getElementById("game1");
 const game2 = document.getElementById("game2");
 const shooter = document.getElementById("Shooter");
 const back = document.getElementById("back");
+const portal1 = document.getElementById("portal1")
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
@@ -123,13 +124,19 @@ function animate(timestamp) {
 animate(0);
 
 game1.onclick = () => {
-  document.body.style.backgroundColor = "Green"
+  document.body.style.backgroundColor = "./res/img/galacticfederation.png"
   main.style.display = "none";
   shooter.style.display = "block";
 };
-
+/*
+portal.onclick = () => {
+  document.body.style.backgroundColor = "./res/img/galacticfederation.png"
+  main.style.display = "none";
+  shooter.style.display = "block";
+};
+*/
 back.onclick = () => {
-  document.body.style.backgroundColor = "white";
+  document.body.style.backgroundColor = "burlywood";
   main.style.display = "block";
   shooter.style.display = "none";
 };
