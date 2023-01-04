@@ -324,6 +324,6 @@ const collision = () => {
         score2 += 50;
       }
       object.reset();
-    }
+    };
   });
 };
