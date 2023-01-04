@@ -146,18 +146,19 @@ function animate(timestamp) {
 animate(0);
 
 game1.onclick = () => {
-  document.body.style.backgroundColor = "./res/img/galacticfederation.png";
+  document.body.style.backgroundImage = "url(./res/img/galacticfederation.png)";
   main.style.display = "none";
   shooter.style.display = "block";
 };
 
 portal1.onclick = () => {
-  document.body.style.backgroundColor = "./res/img/galacticfederation.png";
+  document.body.style.backgroundImage = "url(./res/img/galacticfederation.png)";
   main.style.display = "none";
   shooter.style.display = "block";
 };
 
 back.onclick = () => {
+  document.body.style.backgroundImage = "none"
   document.body.style.backgroundColor = "burlywood";
   main.style.display = "block";
   shooter.style.display = "none";
