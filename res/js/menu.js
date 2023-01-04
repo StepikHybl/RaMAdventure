@@ -1,9 +1,20 @@
 const main = document.getElementById("main");
 const game1 = document.getElementById("game1");
-const game2 = document.getElementById("game2");
 const shooter = document.getElementById("Shooter");
 const back = document.getElementById("back");
-const portal1 = document.getElementById("portal1")
+const portal1 = document.getElementById("portal1");
+const rick = new Image();
+rick.src = "./res/img/Rick2.png";
+const bomb = new Image();
+bomb.src = "./res/img/RickBomb2.png";
+let score2 = 0;
+const plac = new Image();
+plac.src = "./res/img/plac.png";
+
+const dodge = document.getElementById("dodge");
+const portal2 = document.getElementById("portal2");
+const game2 = document.getElementById("game2");
+const back2 = document.getElementById("back2");
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
@@ -43,8 +54,16 @@ class Raven {
     this.randomColors = [
       Math.floor(Math.random() * 255),
       Math.floor(Math.random() * 255),
-      Math.floor(Math.random() * 255),];
-      this.color = "rgb(" + this.randomColors[0] + ',' + this.randomColors[1] + "," + this.randomColors[2] + ")";
+      Math.floor(Math.random() * 255),
+    ];
+    this.color =
+      "rgb(" +
+      this.randomColors[0] +
+      "," +
+      this.randomColors[1] +
+      "," +
+      this.randomColors[2] +
+      ")";
   }
 
   uptade(deltatime) {
@@ -64,7 +83,7 @@ class Raven {
   }
 
   draw() {
-    collisionCtx.fillStyle = this.color
+    collisionCtx.fillStyle = this.color;
     collisionCtx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(
       this.image,
@@ -91,12 +110,15 @@ window.addEventListener("click", function (e) {
   const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
   console.log(detectPixelColor);
   const pc = detectPixelColor.data;
-  ravens.forEach(object => {
-    if(object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1]
-        && object.randomColors[2] === pc[2]){
-            object.markedForDeletion = true;
-            score++;
-        }
+  ravens.forEach((object) => {
+    if (
+      object.randomColors[0] === pc[0] &&
+      object.randomColors[1] === pc[1] &&
+      object.randomColors[2] === pc[2]
+    ) {
+      object.markedForDeletion = true;
+      score++;
+    }
   });
 });
 
@@ -109,8 +131,8 @@ function animate(timestamp) {
   if (timeToNextRaven > ravenInterval) {
     ravens.push(new Raven());
     timeToNextRaven = 0;
-    ravens.sort(function(a,b){
-        return a.width - b.width;
+    ravens.sort(function (a, b) {
+      return a.width - b.width;
     });
   }
   drawScore();
@@ -124,19 +146,184 @@ function animate(timestamp) {
 animate(0);
 
 game1.onclick = () => {
-  document.body.style.backgroundColor = "./res/img/galacticfederation.png"
+  document.body.style.backgroundColor = "./res/img/galacticfederation.png";
   main.style.display = "none";
   shooter.style.display = "block";
 };
-/*
-portal.onclick = () => {
-  document.body.style.backgroundColor = "./res/img/galacticfederation.png"
+
+portal1.onclick = () => {
+  document.body.style.backgroundColor = "./res/img/galacticfederation.png";
   main.style.display = "none";
   shooter.style.display = "block";
 };
-*/
+
 back.onclick = () => {
   document.body.style.backgroundColor = "burlywood";
   main.style.display = "block";
   shooter.style.display = "none";
+};
+
+game2.onclick = () => {
+  document.body.style.backgroundColor =  "rgb(160, 187, 25)";
+  main.style.display = "none";
+  dodge.style.display = "block";
+};
+
+portal2.onclick = () => {
+  document.body.style.backgroundColor = "rgb(160, 187, 25)";
+  main.style.display = "none";
+  dodge.style.display = "block";
+};
+
+back2.onclick = () => {
+  document.body.style.backgroundColor = "burlywood";
+  main.style.display = "block";
+  dodge.style.display = "none";
+};
+
+const canvas2 = document.getElementById("canvas2");
+const ctx1 = canvas2.getContext("2d");
+
+let mouseX = canvas2.width / 1.5;
+
+document.addEventListener(
+  "mousemove",
+  (event) => {
+    mouseX = event.clientX;
+  },
+  false
+);
+
+const random = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
+
+const resize = () => {
+  canvas2.width = window.innerWidth;
+  canvas2.height = window.innerHeight;
+};
+
+window.onload = () => {
+  init();
+  window.addEventListener("resize", resize, false);
+};
+
+const gameLoop = () => {
+  ctx1.fillStyle = "rgb(160, 187, 25)";
+  ctx1.fillRect(0, 0, canvas2.width, canvas2.height);
+  collision();
+  draw();
+
+  window.requestAnimationFrame(gameLoop);
+};
+
+const init = () => {
+  resize();
+  spawnObjects(40);
+  window.requestAnimationFrame(gameLoop);
+};
+
+const draw = () => {
+  drawFace();
+  player.draw();
+  uptadeObjects();
+};
+
+const drawFace = () => {
+  ctx1.fillStyle = "rgb(204, 138, 58)";
+  ctx1.fillRect(0, canvas2.height - 150, canvas2.width, 150);
+  ctx1.fillStyle = "rgb(0, 0, 0)";
+  ctx1.font = "25px Apiral";
+  ctx1.fillText(score2, canvas2.width / 2, canvas2.height - 75);
+};
+
+class Player {
+  width = 70;
+  height = 100;
+
+  draw() {
+    this.x = mouseX - this.width / 2;
+    this.y = canvas2.height - 220;
+    ctx1.drawImage(rick, this.x, this.y, this.width, this.height);
+  }
+}
+
+let player = new Player();
+
+class Object {
+  width = 70;
+  height = 80;
+  constructor(x, y) {
+    this.x = random(10, canvas2.width - this.width);
+    this.y = 0;
+    this.speedY = random(3, 6);
+    let rN = random(0, 9);
+    if (rN < 3) {
+      this.isbomb = 1;
+    } else {
+      this.isbomb = 0;
+    }
+  }
+
+  uptade() {
+    if (this.isbomb) {
+      ctx1.drawImage(bomb, this.x, this.y, this.width, this.height);
+    } else {
+      ctx1.drawImage(plac, this.x, this.y, this.width, this.height);
+    }
+    if (this.y > canvas2.height) {
+      score2 -= 10;
+      if (score2 < 0) {
+        score2 = 0;
+      }
+      this.reset();
+      return;
+    }
+    this.y += this.speedY;
+  }
+
+  reset() {
+    this.x = random(10, canvas2.width - this.width);
+    this.y = 0;
+    this.speedY = random(3, 6);
+    let rN = random(0, 9);
+    if (rN < 3) {
+      this.isbomb = 1;
+    } else {
+      this.isbomb = 0;
+    }
+  }
+}
+
+let objects = [];
+
+const spawnObjects = (number) => {
+  let i = 0;
+  for (i; i < number; i++) {
+    objects.push(new Object());
+  }
+};
+
+const uptadeObjects = () => {
+  objects.forEach((object) => {
+    object.uptade();
+  });
+};
+
+const collision = () => {
+  objects.forEach((object) => {
+    if (
+      player.x < object.x + object.width &&
+      player.x + player.width > object.x &&
+      player.y < object.y + object.height &&
+      player.y + player.height > object.y
+    ) {
+      if (object.isbomb) {
+        score2 = 0;
+      } else {
+        score2 += 50;
+      }
+      object.reset();
+    }
+  });
 };
